@@ -1,6 +1,6 @@
 # angadi
 
-Angadi | The Online Vegitable Ordering App.
+Angadi - the online Vegitables Purchasing app in Pondicherry.
 
 ## Getting Started
 
