@@ -11,10 +11,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Angadi"),
-      ),
-      body: Text("Segar"),
-    );
+        appBar: AppBar(
+          title: Text("Angadi"),
+        ),
+        body: Column(
+          children: [Text("Segar"), FloatingActionButton(onPressed: () {} ),
+          ElevatedButton(
+            onPressed: () {},
+            child: Text("Your Button Label"), // Add your button label here
+          ),],
+        ));
   }
 }
