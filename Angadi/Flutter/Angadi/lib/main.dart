@@ -5,23 +5,66 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeMode currentThemeMode = ThemeMode.system; // Default to light mode
+
+  void toggleThemeMode() {
+    setState(() {
+      currentThemeMode = currentThemeMode == ThemeMode.light
+          ? ThemeMode.dark
+          : ThemeMode.light;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      themeMode: currentThemeMode, // Use the currentThemeMode
+      theme: ThemeData.light().copyWith(
+        // Define the light theme
+        primaryColor: Colors.blueAccent, // Set primary color for light theme
+
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true, // Enable Material Design 3
+        // Add other light theme configurations
       ),
+      darkTheme: ThemeData.dark().copyWith(
+        // Define the dark theme
+        primaryColor: Colors.blueAccent,
+        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+        useMaterial3: true, //  // Set primary color for dark theme
+        // Add other dark theme configurations
+      ),
+
       home: SplashScreen(),
     );
   }
 }
 
+//
+// class _MyAppState extends State<MyApp> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       theme: ThemeData(
+//         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+//         useMaterial3: true, // Enable Material Design 3
+//       ),
+//       home: SplashScreen(),
+//     );
+//   }
+// }
 
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++?
 // import 'package:angadi/Screens/splash.dart';
 // import 'package:flutter/material.dart';
 

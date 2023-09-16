@@ -1,4 +1,5 @@
 import 'package:angadi/Screens/home.dart';
+import 'package:angadi/Screens/login.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -9,6 +10,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  bool isLoggedIn = false;
   void initState() {
     super.initState();
     _navigateToHome();
@@ -16,8 +18,21 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _navigateToHome() async {
     await Future.delayed(Duration(seconds: 3), () {});
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    // Navigator.pushReplacement(
+    //     context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    if (isLoggedIn) {
+      // User is logged in, navigate to HomeScreen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    } else {
+      // User is not logged in, navigate to LoginPage
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    }
   }
 
   @override
