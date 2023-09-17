@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "757189002125",
+    "project_id": "angadi-ssteam",
+    "storage_bucket": "angadi-ssteam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757189002125:android:2f85d28452e0ea7b6073c4",
+        "android_client_info": {
+          "package_name": "com.ssteam.angadi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbEzjb3lcWrNXjKoCwl3GXA9GPF-vUrvk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

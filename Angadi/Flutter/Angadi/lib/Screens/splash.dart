@@ -1,6 +1,9 @@
 import 'package:angadi/Screens/home.dart';
 import 'package:angadi/Screens/login.dart';
+import 'package:angadi/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,29 +14,84 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   bool isLoggedIn = false;
+
+  @override
   void initState() {
     super.initState();
-    _navigateToHome();
+    _checkLoginState();
   }
 
-  _navigateToHome() async {
-    await Future.delayed(Duration(seconds: 3), () {});
-    // Navigator.pushReplacement(
-    //     context, MaterialPageRoute(builder: (context) => HomeScreen()));
-    if (isLoggedIn) {
-      // User is logged in, navigate to HomeScreen
+  _checkLoginState() async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final user = FirebaseAuth.instance.currentUser;
+
+    await Future.delayed(Duration(seconds: 3));
+
+    if (user != null) {
+      authProvider.setLoggedIn(true);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => HomeScreen()),
       );
     } else {
-      // User is not logged in, navigate to LoginPage
+      authProvider.setLoggedIn(false);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => LoginPage()),
       );
     }
   }
+
+  // _checkLoginState() async {
+  //   // Check if the user is already logged in (you can implement this logic)
+  //   // Example:
+  //   final authProvider = Provider.of<AuthProvider>(context, listen: false);
+  //   if (authProvider.user != null) {
+  //     setState(() {
+  //       isLoggedIn = true;
+  //     });
+  //   }
+  //   await Future.delayed(Duration(seconds: 3), () {});
+  //   _navigateToHome();
+  // }
+
+  _navigateToHome() {
+    if (isLoggedIn) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    }
+  }
+  // bool isLoggedIn = false;
+  // void initState() {
+  //   super.initState();
+  //   _navigateToHome();
+  // }
+  //
+  // _navigateToHome() async {
+  //   await Future.delayed(Duration(seconds: 3), () {});
+  //   // Navigator.pushReplacement(
+  //   //     context, MaterialPageRoute(builder: (context) => HomeScreen()));
+  //   if (isLoggedIn) {
+  //     // User is logged in, navigate to HomeScreen
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => HomeScreen()),
+  //     );
+  //   } else {
+  //     // User is not logged in, navigate to LoginPage
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => LoginPage()),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
