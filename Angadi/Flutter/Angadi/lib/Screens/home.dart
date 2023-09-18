@@ -1,5 +1,15 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+void main() => runApp(const NavigationBarApp());
+
+class NavigationBarApp extends StatelessWidget {
+  const NavigationBarApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(home: HomeScreen());
+  }
+}
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,71 +19,99 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // Add a reference to FirebaseAuth
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  int currentPageIndex = 0;
+  bool isSearchVisible = false; // Track if the search box is visible
+  TextEditingController searchController = TextEditingController();
 
-  // Function to handle user logout
-  Future<void> _logout() async {
-    try {
-      await _auth.signOut();
-      Navigator.of(context)
-          .pop(); // Navigate back to the previous screen (login or splash)
-    } catch (e) {
-      print('Logout error: $e');
-    }
+  @override
+  void dispose() {
+    searchController.dispose(); // Dispose of the controller when not needed
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Angadi"),
+        backgroundColor: Colors.white, // Set background color to white
+        leading: Image.asset(
+          'assets/icon.png',
+          // height: 20,
+          fit: BoxFit.contain,
+        ), // Cart icon
+        title: isSearchVisible
+            ? AnimatedContainer(
+                duration: Duration(milliseconds: 300), // Animation duration
+                width: isSearchVisible ? 400 : 0, // Change width
+                child: TextField(
+                  controller: searchController,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    hintText: 'Search...',
+                    border: InputBorder.none,
+                  ),
+                ),
+              )
+            : Text("Angadi"), // Show "Angadi" text or search field
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: _logout,
+            icon: Icon(isSearchVisible
+                ? Icons.close
+                : Icons.search), // Change icon based on visibility
+            onPressed: () {
+              setState(() {
+                isSearchVisible = !isSearchVisible; // Toggle search visibility
+                if (!isSearchVisible) {
+                  // Clear search text when closing search box
+                  searchController.clear();
+                }
+              });
+            },
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Text("Segar"),
-          FloatingActionButton(
-            onPressed: () {},
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        indicatorColor: Theme.of(context).primaryColor,
+        selectedIndex: currentPageIndex,
+        destinations: const <Widget>[
+          NavigationDestination(
+            selectedIcon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
+            label: 'Home',
           ),
-          ElevatedButton(
-            onPressed:
-                _logout, // Call the _logout function when the button is pressed
-            child: Text("Logout"), // Change button label to "Logout"
+          NavigationDestination(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Cart',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.person),
+            icon: Icon(Icons.person_outline),
+            label: 'Profile',
           ),
         ],
       ),
+      body: <Widget>[
+        Container(
+          // color: Theme.of(context).primaryColor,
+          alignment: Alignment.center,
+          child: const Text('Home Page Content'),
+        ),
+        Container(
+          // color: Theme.of(context).primaryColor,
+          alignment: Alignment.center,
+          child: const Text('Cart Page Content'),
+        ),
+        Container(
+          // color: Theme.of(context).primaryColor,
+          alignment: Alignment.center,
+          child: const Text('Profile Page Content'),
+        ),
+      ][currentPageIndex],
     );
   }
 }
-
-// import 'package:flutter/material.dart';
-//
-// class HomeScreen extends StatefulWidget {
-//   const HomeScreen({super.key});
-//
-//   @override
-//   State<HomeScreen> createState() => _HomeScreenState();
-// }
-//
-// class _HomeScreenState extends State<HomeScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(
-//           title: Text("Angadi"),
-//         ),
-//         body: Column(
-//           children: [Text("Segar"), FloatingActionButton(onPressed: () {} ),
-//           ElevatedButton(
-//             onPressed: () {},
-//             child: Text("Your Button Label"), // Add your button label here
-//           ),],
-//         ));
-//   }
-// }

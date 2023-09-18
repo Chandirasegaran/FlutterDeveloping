@@ -1,3 +1,4 @@
+import 'package:angadi/Screens/home.dart';
 import 'package:angadi/Screens/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +64,9 @@ class _MyAppState extends State<MyApp> {
           primaryColor: Colors.blueAccent,
           useMaterial3: true,
         ),
-        home: SplashScreen(),
+        home: HomeScreen(),
+        // home: NavigationExample(),
+        // home: SplashScreen(),
       ),
     );
   }
