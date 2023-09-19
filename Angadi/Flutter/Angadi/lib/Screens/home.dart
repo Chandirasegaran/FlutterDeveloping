@@ -129,7 +129,8 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.shopping_cart),
+            selectedIcon: Icon(Icons.shopping_cart),
+            icon: Icon(Icons.shopping_cart_outlined),
             label: 'Cart',
           ),
           NavigationDestination(
@@ -176,8 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             IconButton(
-                              selectedIcon: Icon(Icons.shopping_cart),
-                              icon: Icon(Icons.shopping_cart_outlined),
+                              icon: Icon(Icons.shopping_cart_checkout_outlined),
                               onPressed: () {
                                 // Add to cart logic
                                 // You can add your logic here to add the vegetable to the cart
